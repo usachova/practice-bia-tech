@@ -1,7 +1,10 @@
 {% extends 'mysite/base.html' %}
 {% block title %} сайт {% endblock %}
 {% block body %}
-<p>всё ещё работает</p>
+    <p>лооол всё ещё работает</p>
+    {% for topic in topics %}
+        <p>{{ topic }}</p>
+    {% endfor %}
 {% endblock %}
 
 
