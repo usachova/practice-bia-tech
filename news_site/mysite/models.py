@@ -8,7 +8,8 @@ class Topic(models.Model):
 
 class Article(models.Model):
     # topic = models.CharField()
-    title = models.CharField(max_length=300)
+    url = models.SlugField(unique=True, default="dafault_url")
+    title = models.CharField(max_length=100)
     text = models.TextField()
     image = models.ImageField(blank=True)
 
