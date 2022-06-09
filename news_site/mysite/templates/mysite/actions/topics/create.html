@@ -1,0 +1,10 @@
+{% extends 'mysite/base.html' %}
+{% block title %} Новая тема {% endblock %}
+{% block body %}
+    <h1>Добавить новую тему</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.topic }}
+        <button type="submit">добавить</button>
+    </form>
+{% endblock %}

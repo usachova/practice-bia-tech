@@ -1,0 +1,12 @@
+{% extends 'mysite/base.html' %}
+{% block title %} Новая статья {% endblock %}
+{% block body %}
+    <h1>Добавить новую статью</h1>
+    <form method="post">
+        <input type="text" placeholder="название темы">
+        <input type="text" placeholder="название темы">
+        <textarea placeholder="текст статьи"></textarea>
+        <input type="image">
+        <button type="submit">добавить</button>
+    </form>
+{% endblock %}
