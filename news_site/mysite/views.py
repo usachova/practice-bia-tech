@@ -1,9 +1,12 @@
+from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import UpdateView, DeleteView
 from django.http import Http404
 from .models import Topic, Article
-from .forms import TopicForm
+from .forms import TopicForm, AuthUserForm
+
 
 class MainView(View):
     def get(self, request, *args, **kwargs):
@@ -47,6 +50,8 @@ class ArticleView(View):
             raise Http404
         return render(request, 'mysite/article.html', context={'article': article})
 
-# class ArticleUpdateView(UpdateView):
-#     model = Article
-#     template_name = 'update.html'
+class NewsSiteLoginView(LoginView):
+    template_name = 'mysite/auth/login.html'
+    form_class = AuthUserForm
+    success_url = '/'
+

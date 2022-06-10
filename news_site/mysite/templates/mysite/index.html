@@ -1,6 +1,10 @@
 {% extends 'mysite/base.html' %}
 {% block title %} сайт {% endblock %}
 {% block body %}
+    <a><button>Регистрация</button></a>
+    <a href="{% url 'login' %}"><button>Вход</button></a>
+    <a><button>Выход</button></a><br>
+    <br>
     <a href="{% url 'create' %}"><button>добавить тему</button></a>
     <ul>
         <b>темы</b>

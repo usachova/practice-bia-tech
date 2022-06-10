@@ -1,0 +1,9 @@
+{% extends 'mysite/base.html' %}
+{% block title %} Вход {% endblock %}
+{% block body %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.topic }}
+        <button type="submit">добавить</button>
+    </form>
+{% endblock %}
