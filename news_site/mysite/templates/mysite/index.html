@@ -1,11 +1,9 @@
 {% extends 'mysite/base.html' %}
 {% block title %} сайт {% endblock %}
 {% block body %}
-    <h1>лооол всё ещё работает</h1>
+    <a href="{% url 'create' %}"><button>добавить тему</button></a>
     <ul>
         <b>темы</b>
-<!--        <a href="actions/topics/create.html"><button>добавить тему</button></a>-->
-        <a href="{% url 'create' %}"><button>добавить тему</button></a>
         {% for topic in topics %}
             <li>{{ topic }}</li>
         {% endfor %}

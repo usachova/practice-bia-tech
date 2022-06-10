@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views import View
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, DeleteView
 from django.http import Http404
 from .models import Topic, Article
 from .forms import TopicForm
@@ -28,6 +28,16 @@ def create_topic(request):
     }
     return render(request, 'mysite/actions/topics/create.html', data)
 
+class TopicUpdateView(UpdateView):
+    model = Topic
+    template_name = 'mysite/actions/topics/update.html'
+    fields = ['topic']
+
+class TopicDeleteView(DeleteView):
+    model = Topic
+    success_url = '/'
+    template_name = 'mysite/actions/topics/delete.html'
+    fields = ['topic']
 
 class ArticleView(View):
     def get(self, request, slug, *args, **kwargs ):
