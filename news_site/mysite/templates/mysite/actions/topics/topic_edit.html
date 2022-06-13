@@ -1,0 +1,15 @@
+{% extends 'mysite/base.html' %}
+{% block title %} Редактирование тем {% endblock %}
+{% block body %}
+    <a href="{% url 'create' %}"><button>добавить тему</button></a>
+    <ul>
+        <b>список тем</b>
+        {% for topic in topics %}
+            <li>
+                {{ topic }}
+                <a href="{% url 'update_topic' topic.id %}"><button>редактировать</button></a>
+                <a href="{% url 'delete_topic' topic.id %}"><button>удалить</button></a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

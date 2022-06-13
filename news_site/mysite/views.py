@@ -14,15 +14,17 @@ class MainView(View):
         topics = Topic.objects.all()
         return render(request, 'mysite/index.html', context={'topics': topics})
 
-class TopicView(View):
-    pass
+class TopicsEditView(View):
+    def get(self, request, *args, **kwargs):
+        topics = Topic.objects.all()
+        return render(request, 'mysite/actions/topics/topic_edit.html', context={'topics': topics})
 
 def create_topic(request):
     if request.method == 'POST':
         form = TopicForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('index')
+            return redirect('edit_topics')
         else:
             print('ошибка')
 
@@ -34,12 +36,13 @@ def create_topic(request):
 
 class TopicUpdateView(UpdateView):
     model = Topic
+    success_url = '/topics/edit'
     template_name = 'mysite/actions/topics/update.html'
     fields = ['topic']
 
 class TopicDeleteView(DeleteView):
     model = Topic
-    success_url = '/'
+    success_url = '/topics/edit'
     template_name = 'mysite/actions/topics/delete.html'
     fields = ['topic']
 
