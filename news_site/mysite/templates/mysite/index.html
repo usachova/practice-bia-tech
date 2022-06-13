@@ -7,11 +7,15 @@
     <a href="{% url 'login' %}"><button>Вход</button></a>
     <a href="{% url 'logout' %}"><button>Выход</button></a><br>
     <br>
-    <a href="{% url 'edit_topics' %}"><button>Редактировать темы</button></a>
-    <a href="{% url 'edit_articles' %}"><button>Редактировать статьи</button></a>
-<!--    {% if request.user.is_authenticated and request.user.is_staff %}-->
-
-<!--    {% endif %}-->
+    {% load auth_extras %}
+    {% if request.user.is_authenticated %}
+        {% if request.user|has_group:"admins" %}
+            <a href="{% url 'edit_topics' %}"><button>Редактировать темы</button></a>
+        {% endif %}
+        {% if request.user|has_group:"admins" or request.user|has_group:"editors" %}
+            <a href="{% url 'edit_articles' %}"><button>Редактировать статьи</button></a>
+        {% endif %}
+    {% endif %}
     <ul>
         <b>темы</b>
         {% for topic in topics %}
