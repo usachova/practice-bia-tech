@@ -8,7 +8,6 @@ from django.http import Http404
 from .models import Topic, Article
 from .forms import TopicForm, AuthUserForm, RedistrUserForm
 
-
 class MainView(View):
     def get(self, request, *args, **kwargs):
         topics = Topic.objects.all()
@@ -19,20 +18,17 @@ class TopicsEditView(View):
         topics = Topic.objects.all()
         return render(request, 'mysite/actions/topics/topic_edit.html', context={'topics': topics})
 
-def create_topic(request):
-    if request.method == 'POST':
-        form = TopicForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('edit_topics')
-        else:
-            print('ошибка')
+class TopicCreateView(CreateView):
+    model = Topic
+    success_url = '/topics/edit'
+    template_name = 'mysite/actions/topics/create.html'
+    fields = ['topic']
 
-    form = TopicForm()
-    data = {
-        'form': form
-    }
-    return render(request, 'mysite/actions/topics/create.html', data)
+    # def form_valid(self, form):
+    #     self.object = form.save(commit=False)
+    #     self.object.author = self.request.user
+    #     self.object.save()
+    #     return super().form_valid(form)
 
 class TopicUpdateView(UpdateView):
     model = Topic
@@ -45,6 +41,24 @@ class TopicDeleteView(DeleteView):
     success_url = '/topics/edit'
     template_name = 'mysite/actions/topics/delete.html'
     fields = ['topic']
+
+class ArticlesEditView(View):
+    def get(self, request, *args, **kwargs):
+        articles = Article.objects.all()
+        return render(request, 'mysite/actions/articles/article_edit.html', context={'articles': articles})
+
+class ArticleCreateView(CreateView):
+    model = Article
+    success_url = '/articles/edit'
+    template_name = 'mysite/actions/articles/create.html'
+    fields = ['topic', 'title', 'text', 'image']
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.author = self.request.user
+        self.object.save()
+        return super().form_valid(form)
+
 
 class ArticleView(View):
     def get(self, request, slug, *args, **kwargs ):
