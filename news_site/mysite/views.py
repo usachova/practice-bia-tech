@@ -3,7 +3,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import UpdateView, DeleteView, CreateView
+from django.views.generic import UpdateView, DeleteView, CreateView, DetailView
 from django.http import Http404
 from .models import Topic, Article
 from .forms import TopicForm, AuthUserForm, RedistrUserForm
@@ -60,13 +60,10 @@ class ArticleCreateView(CreateView):
         return super().form_valid(form)
 
 
-class ArticleView(View):
-    def get(self, request, slug, *args, **kwargs ):
-        try:
-            article = Article.objects.get(url=slug)
-        except Article.DoesNotExist:
-            raise Http404
-        return render(request, 'mysite/article.html', context={'article': article})
+class ArticleView(DetailView):
+    model = Article
+    template_name = 'mysite/article.html'
+    context_object_name = 'article'
 
 class LoginUserView(LoginView):
     template_name = 'mysite/auth/login.html'

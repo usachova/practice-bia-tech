@@ -3,4 +3,5 @@
 {% block body %}
     <h1>{{ article.title }}</h1>
     <p>{{ article.text|safe|linebreaks }}</p>
+    <p><i>Автор: {{ article.author }}</i></p>
 {% endblock %}

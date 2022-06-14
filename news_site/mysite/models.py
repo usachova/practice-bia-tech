@@ -13,7 +13,6 @@ class Topic(models.Model):
 class Article(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='автор')
     topic = models.ForeignKey(Topic, on_delete=models.SET_NULL, verbose_name='тема', blank=True, null=True)
-    url = models.SlugField(unique=True, default="dafault_url")
     title = models.CharField(max_length=100)
     text = models.TextField()
     image = models.ImageField(blank=True)

@@ -14,5 +14,5 @@ urlpatterns = [
     path('articles/create', ArticleCreateView.as_view(), name='create_article'),
     # path('<int:pk>/update', TopicUpdateView.as_view(), name='update_topic'),
     # path('<int:pk>/delete', TopicDeleteView.as_view(), name='delete_topic'),
-    path('<slug>', ArticleView.as_view(), name='article'),
+    path('articles/<int:pk>', ArticleView.as_view(), name='article'),
 ]
