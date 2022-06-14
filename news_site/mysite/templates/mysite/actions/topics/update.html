@@ -4,7 +4,12 @@
     <h1>Редактировать тему</h1>
     <form method="post">
         {% csrf_token %}
-        {{ form.topic }}
-        <button type="submit">отредактировать</button>
+        {% load auth_extras %}
+        {% if request.user.is_authenticated %}
+            {% if request.user|has_group:"admins" %}
+                {{ form.topic }}
+                <button type="submit">отредактировать</button>
+            {% endif %}
+        {% endif %}
     </form>
 {% endblock %}

@@ -7,8 +7,13 @@
         {% for topic in topics %}
             <li>
                 {{ topic }}
-                <a href="{% url 'update_topic' topic.id %}"><button>редактировать</button></a>
-                <a href="{% url 'delete_topic' topic.id %}"><button>удалить</button></a>
+                {% load auth_extras %}
+                {% if request.user.is_authenticated %}
+                    {% if request.user|has_group:"admins" %}
+                        <a href="{% url 'update_topic' topic.id %}"><button>редактировать</button></a>
+                        <a href="{% url 'delete_topic' topic.id %}"><button>удалить</button></a>
+                    {% endif %}
+                {% endif %}
             </li>
         {% endfor %}
     </ul>

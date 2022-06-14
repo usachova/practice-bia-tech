@@ -4,7 +4,12 @@
     <h1>Добавить новую тему</h1>
     <form method="post">
         {% csrf_token %}
-        {{ form.topic }}
-        <button type="submit">добавить</button>
+        {% load auth_extras %}
+        {% if request.user.is_authenticated %}
+            {% if request.user|has_group:"admins" %}
+                {{ form.topic }}
+                <button type="submit">добавить</button>
+            {% endif %}
+        {% endif %}
     </form>
 {% endblock %}

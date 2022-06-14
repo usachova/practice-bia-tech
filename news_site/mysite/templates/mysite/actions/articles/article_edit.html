@@ -3,10 +3,18 @@
 {% block body %}
     <a href="{% url 'create_article' %}"><button>добавить статью</button></a>
     <ul>
-        <b>список тем</b>
+        <b>список статей</b>
         {% for article in articles %}
             <li>
                 {{ article }}
+                <a href="{% url 'article' article.id %}"><button>просмотр</button></a>
+                {% load auth_extras %}
+                {% if request.user.is_authenticated %}
+                    {% if request.user|has_group:"admins" or request.user|has_group:"editors" %}
+                        <a href="{% url 'update_article' article.id %}"><button>редактировать</button></a>
+                        <a href="{% url 'delete_article' article.id %}"><button>удалить</button></a>
+                    {% endif %}
+                {% endif %}
             </li>
         {% endfor %}
     </ul>

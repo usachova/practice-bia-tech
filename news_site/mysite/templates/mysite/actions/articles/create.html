@@ -4,10 +4,15 @@
     <h1>Добавить новую статью</h1>
     <form method="post">
         {% csrf_token %}
-        {{ form.topic }}<br>
-        {{ form.title }}<br>
-        {{ form.text }}<br>
-        {{ form.image }}<br>
-        <button type="submit">добавить</button>
+        {% load auth_extras %}
+        {% if request.user.is_authenticated %}
+            {% if request.user|has_group:"admins" or request.user|has_group:"editors" %}
+                {{ form.topic }}<br>
+                {{ form.title }}<br>
+                {{ form.text }}<br>
+                {{ form.image }}<br>
+                <button type="submit">добавить</button>
+            {% endif %}
+        {% endif %}
     </form>
 {% endblock %}

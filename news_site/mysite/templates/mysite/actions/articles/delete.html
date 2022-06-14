@@ -4,6 +4,11 @@
     <h1>Удалить статью</h1>
     <form method="post">
         {% csrf_token %}
-        <button type="submit">удалить</button>
+        {% load auth_extras %}
+        {% if request.user.is_authenticated %}
+            {% if request.user|has_group:"admins" or request.user|has_group:"editors" %}
+                <button type="submit">удалить</button>
+            {% endif %}
+        {% endif %}
     </form>
 {% endblock %}
