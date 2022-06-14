@@ -24,12 +24,6 @@ class TopicCreateView(CreateView):
     template_name = 'mysite/actions/topics/create.html'
     fields = ['topic']
 
-    # def form_valid(self, form):
-    #     self.object = form.save(commit=False)
-    #     self.object.author = self.request.user
-    #     self.object.save()
-    #     return super().form_valid(form)
-
 class TopicUpdateView(UpdateView):
     model = Topic
     success_url = '/topics/edit'
@@ -64,6 +58,18 @@ class ArticleView(DetailView):
     model = Article
     template_name = 'mysite/article.html'
     context_object_name = 'article'
+
+class ArticleUpdateView(UpdateView):
+    model = Article
+    success_url = '/articles/edit'
+    template_name = 'mysite/actions/articles/update.html'
+    fields = ['topic', 'title', 'text', 'image']
+
+class ArticleDeleteView(DeleteView):
+    model = Article
+    success_url = '/articles/edit'
+    template_name = 'mysite/actions/articles/delete.html'
+    fields = ['topic', 'title', 'text', 'image']
 
 class LoginUserView(LoginView):
     template_name = 'mysite/auth/login.html'

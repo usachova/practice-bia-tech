@@ -1,0 +1,9 @@
+{% extends 'mysite/base.html' %}
+{% block title %} Удаление статьи {% endblock %}
+{% block body %}
+    <h1>Удалить статью</h1>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">удалить</button>
+    </form>
+{% endblock %}
