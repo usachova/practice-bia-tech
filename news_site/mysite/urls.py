@@ -8,6 +8,7 @@ urlpatterns = [
     path('register', RedistrUserView.as_view(), name='register'),
     path('logout', LogoutUserView.as_view(), name='logout'),
     path('topic/', ArticleListView.as_view(), name='topic'),
+    path('topic/without_topic', ArticleWithoutTopicListView.as_view(), name='without_topic'),
     path('topics/edit', TopicsEditView.as_view(), name='edit_topics'),
     path('topic/create', TopicCreateView.as_view(), name='create_topic'),
     path('topic/<int:pk>/update', TopicUpdateView.as_view(), name='update_topic'),

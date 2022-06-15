@@ -23,6 +23,6 @@
                 <a href="{% url 'topic' %}?id={{ topic.id }}">{{ topic }}</a>
             </li>
         {% endfor %}
-        <h3>статьи без темы</h3>
+        <h3><a href="{% url 'without_topic' %}">статьи без темы</a></h3>
     </ul>
 {% endblock %}
