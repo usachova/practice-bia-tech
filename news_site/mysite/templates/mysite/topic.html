@@ -3,6 +3,6 @@
 {% block body %}
 <h2>{{ topic }}</h2>
 {% for article in articles %}
-    {{ article }}<br>
+    <a href="{% url 'article' article.id %}">{{ article }}</a><br>
 {% endfor %}
 {% endblock %}
