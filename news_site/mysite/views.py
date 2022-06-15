@@ -3,7 +3,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import UpdateView, DeleteView, CreateView, DetailView
+from django.views.generic import UpdateView, DeleteView, CreateView, DetailView, ListView
 from django.http import Http404
 from .models import Topic, Article
 from .forms import TopicForm, AuthUserForm, RedistrUserForm
@@ -11,7 +11,24 @@ from .forms import TopicForm, AuthUserForm, RedistrUserForm
 class MainView(View):
     def get(self, request, *args, **kwargs):
         topics = Topic.objects.all()
-        return render(request, 'mysite/index.html', context={'topics': topics})
+        articles = Article.objects.all()
+        return render(request, 'mysite/index.html', context={'topics': topics, 'articles': articles})
+
+class ArticleListView(ListView):
+    model = Article
+    template_name = 'mysite/topic.html'
+    context_object_name = 'articles'
+
+    def get_queryset(self):
+        id_ = self.request.GET.get('id')
+        new_context = Article.objects.filter(
+            id=id_,
+        )
+        return new_context
+
+    def get_context_data(self, **kwargs):
+        context = super(ArticleListView, self).get_context_data(**kwargs)
+        return context
 
 class TopicsEditView(View):
     def get(self, request, *args, **kwargs):

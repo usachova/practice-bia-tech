@@ -1,11 +1,13 @@
 from django.urls import path
 from .views import *
+from django.contrib import admin
 
 urlpatterns = [
     path('', MainView.as_view(), name='index'),
     path('login', LoginUserView.as_view(), name='login'),
     path('register', RedistrUserView.as_view(), name='register'),
     path('logout', LogoutUserView.as_view(), name='logout'),
+    path('topic/', ArticleListView.as_view(), name='topic'),
     path('topics/edit', TopicsEditView.as_view(), name='edit_topics'),
     path('topic/create', TopicCreateView.as_view(), name='create_topic'),
     path('topic/<int:pk>/update', TopicUpdateView.as_view(), name='update_topic'),

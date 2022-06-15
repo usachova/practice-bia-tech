@@ -1,0 +1,8 @@
+{% extends 'mysite/base.html' %}
+{% block title %} {{ topic }} {% endblock %}
+{% block body %}
+<h2>{{ topic }}</h2>
+{% for article in articles %}
+    {{ article }}
+{% endfor %}
+{% endblock %}

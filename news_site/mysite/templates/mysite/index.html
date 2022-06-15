@@ -17,9 +17,12 @@
         {% endif %}
     {% endif %}
     <ul>
-        <b>темы</b>
+        <h3>темы</h3>
         {% for topic in topics %}
-            <li>{{ topic }}</li>
+            <li>
+                <a href="{% url 'topic' %}?id={{ topic.id }}">{{ topic }}</a>
+            </li>
         {% endfor %}
+        <h3>статьи без темы</h3>
     </ul>
 {% endblock %}
