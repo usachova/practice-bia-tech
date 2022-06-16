@@ -4,7 +4,6 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import UpdateView, DeleteView, CreateView, DetailView, ListView
-from django.http import Http404
 from .models import Topic, Article
 from .forms import TopicForm, AuthUserForm, RedistrUserForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -13,10 +12,22 @@ class MainView(View):
     def get(self, request, *args, **kwargs):
         topics = Topic.objects.all()
         articles = Article.objects.all()
-        return render(request, 'mysite/index.html', context={'topics': topics, 'articles': articles})
+
+        object_list = Article.objects.order_by('topic')
+        paginator = Paginator(object_list, 5)
+        page = request.GET.get('page')
+        try:
+            post_list = paginator.page(page)
+        except PageNotAnInteger:
+            post_list = paginator.page(1)
+        except EmptyPage:
+            post_list = paginator.page(paginator.num_pages)
+        return render(request,
+                      'mysite/index.html',
+                      {'page': page,
+                       'post_list': post_list})
 
 class ArticleListView(ListView):
-    paginate_by = 3
     model = Article
     template_name = 'mysite/topic.html'
     context_object_name = 'articles'
@@ -33,7 +44,6 @@ class ArticleListView(ListView):
         return context
 
 class ArticleWithoutTopicListView(ListView):
-    paginate_by = 3
     model = Article
     template_name = 'mysite/topic.html'
     context_object_name = 'articles'
