@@ -17,47 +17,25 @@
         {% endif %}
     {% endif %}
 
-<!--    {% regroup articles by topic as topics_list %}-->
-<!--    <ul>-->
-<!--    {% for topic in topics_list %}-->
-<!--        <li>{{ topic.grouper }}-->
-<!--            <ul>-->
-<!--                {% for item in topic.list %}-->
-<!--                  <li>{{ item }}</li>-->
-<!--                {% endfor %}-->
-<!--            </ul>-->
-<!--        </li>-->
-<!--    {% endfor %}-->
-<br>
-{% regroup post_list by topic as topics_list %}
+{% regroup article_list by topic as topics_list %}
 <ul>
 {% for topic in topics_list %}
     <li>{{ topic.grouper }}
         <ul>
-            {% for item in topic.list %}
-                <li><a href="{% url 'article' item.id %}">{{ item }}</a></li>
+            {% for article in topic.list %}
+                <li><a href="{% url 'article' article.id %}">{{ article }}</a></li>
             {% endfor %}
         </ul>
     </li>
 {% endfor %}
 </ul>
 
-{% if post_list.has_other_pages %}
-    {% if post_list.has_previous %}
-    <a href="?page={{ post_list.previous_page_number }}" class="page-link">&laquo; PREV </a>
+{% if article_list.has_other_pages %}
+    {% if article_list.has_previous %}
+    <a href="?page={{ article_list.previous_page_number }}" class="page-link">&laquo; предыдущая </a>
     {% endif %}
-    {% if post_list.has_next %}
-    <a href="?page={{ post_list.next_page_number }}" class="page-link"> NEXT &raquo;</a>
+    {% if article_list.has_next %}
+    <a href="?page={{ article_list.next_page_number }}" class="page-link"> следующая &raquo;</a>
    {% endif %}
 {% endif %}
-
-<!--    <ul>-->
-<!--        <h3>темы</h3>-->
-<!--        {% for topic in topics %}-->
-<!--            <li>-->
-<!--                <a href="{% url 'topic' %}?id={{ topic.id }}">{{ topic }}</a>-->
-<!--            </li>-->
-<!--        {% endfor %}-->
-<!--        <h3><a href="{% url 'without_topic' %}">статьи без темы</a></h3>-->
-<!--    </ul>-->
 {% endblock %}

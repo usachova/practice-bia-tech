@@ -10,22 +10,16 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 class MainView(View):
     def get(self, request, *args, **kwargs):
-        topics = Topic.objects.all()
-        articles = Article.objects.all()
-
         object_list = Article.objects.order_by('topic')
         paginator = Paginator(object_list, 5)
         page = request.GET.get('page')
         try:
-            post_list = paginator.page(page)
+            article_list = paginator.page(page)
         except PageNotAnInteger:
-            post_list = paginator.page(1)
+            article_list = paginator.page(1)
         except EmptyPage:
-            post_list = paginator.page(paginator.num_pages)
-        return render(request,
-                      'mysite/index.html',
-                      {'page': page,
-                       'post_list': post_list})
+            article_list = paginator.page(paginator.num_pages)
+        return render(request, 'mysite/index.html', {'page': page, 'article_list': article_list})
 
 class ArticleListView(ListView):
     model = Article
