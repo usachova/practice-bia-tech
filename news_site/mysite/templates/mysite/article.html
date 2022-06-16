@@ -2,8 +2,14 @@
 {% block title %} {{ article.title }} {% endblock %}
 {% block body %}
     <h1>{{ article.title }}</h1>
+    <p>Тема: {{ article.topic }}</p>
     <p>{{ article.text|safe|linebreaks }}</p>
     <p><i>Автор: {{ article.author }}</i></p>
-    <a href="{% url 'update_article' article.id %}"><button>редактировать</button></a>
-    <a href="{% url 'delete_article' article.id %}"><button>удалить</button></a>
+    {% load auth_extras %}
+    {% if request.user.is_authenticated %}
+        {% if request.user|has_group:"admins" or request.user|has_group:"editors" %}
+            <a href="{% url 'update_article' article.id %}"><button>редактировать</button></a>
+             <a href="{% url 'delete_article' article.id %}"><button>удалить</button></a>
+        {% endif %}
+    {% endif %}
 {% endblock %}

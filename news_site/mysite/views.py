@@ -7,6 +7,7 @@ from django.views.generic import UpdateView, DeleteView, CreateView, DetailView,
 from django.http import Http404
 from .models import Topic, Article
 from .forms import TopicForm, AuthUserForm, RedistrUserForm
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 class MainView(View):
     def get(self, request, *args, **kwargs):
@@ -15,6 +16,7 @@ class MainView(View):
         return render(request, 'mysite/index.html', context={'topics': topics, 'articles': articles})
 
 class ArticleListView(ListView):
+    paginate_by = 3
     model = Article
     template_name = 'mysite/topic.html'
     context_object_name = 'articles'
@@ -22,7 +24,7 @@ class ArticleListView(ListView):
     def get_queryset(self):
         id_ = self.request.GET.get('id')
         new_context = Article.objects.filter(
-            id=id_,
+            topic_id=id_,
         )
         return new_context
 
@@ -31,6 +33,7 @@ class ArticleListView(ListView):
         return context
 
 class ArticleWithoutTopicListView(ListView):
+    paginate_by = 3
     model = Article
     template_name = 'mysite/topic.html'
     context_object_name = 'articles'
