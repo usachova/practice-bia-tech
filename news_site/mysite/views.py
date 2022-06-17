@@ -1,5 +1,7 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, LogoutView
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
@@ -7,6 +9,9 @@ from django.views.generic import UpdateView, DeleteView, CreateView, DetailView,
 from .models import Topic, Article
 from .forms import TopicForm, AuthUserForm, RedistrUserForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+from .templatetags.auth_extras import has_group
+
 
 class MainView(View):
     def get(self, request, *args, **kwargs):
@@ -96,17 +101,31 @@ class ArticleView(DetailView):
     template_name = 'mysite/article.html'
     context_object_name = 'article'
 
-class ArticleUpdateView(UpdateView):
+class ArticleUpdateView(LoginRequiredMixin, UpdateView):
     model = Article
     success_url = '/articles/edit'
     template_name = 'mysite/actions/articles/update.html'
     fields = ['topic', 'title', 'text', 'image']
 
-class ArticleDeleteView(DeleteView):
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        if self.request.user != kwargs['instance'].author and not has_group(self.request.user, "admins"):
+            return self.handle_no_permission()
+        return kwargs
+
+class ArticleDeleteView(LoginRequiredMixin, DeleteView):
     model = Article
     success_url = '/articles/edit'
     template_name = 'mysite/actions/articles/delete.html'
     fields = ['topic', 'title', 'text', 'image']
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.request.user != self.object.author and not has_group(self.request.user, "admins"):
+            return self.handle_no_permission()
+        success_url = self.get_success_url()
+        self.object.delete()
+        return HttpResponseRedirect(success_url)
 
 class LoginUserView(LoginView):
     template_name = 'mysite/auth/login.html'

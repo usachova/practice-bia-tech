@@ -32,10 +32,10 @@
 
 {% if article_list.has_other_pages %}
     {% if article_list.has_previous %}
-    <a href="?page={{ article_list.previous_page_number }}" class="page-link">&laquo; предыдущая </a>
+        <a href="?page={{ article_list.previous_page_number }}" class="page-link">&laquo; предыдущая </a>
     {% endif %}
     {% if article_list.has_next %}
-    <a href="?page={{ article_list.next_page_number }}" class="page-link"> следующая &raquo;</a>
+        <a href="?page={{ article_list.next_page_number }}" class="page-link"> следующая &raquo;</a>
    {% endif %}
 {% endif %}
 {% endblock %}
