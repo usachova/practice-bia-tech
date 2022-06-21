@@ -15,7 +15,7 @@ class Article(models.Model):
     topic = models.ForeignKey(Topic, on_delete=models.SET_NULL, verbose_name='тема', blank=True, null=True)
     title = models.CharField(max_length=100)
     text = models.TextField()
-    image = models.ImageField(blank=True)
+    image = models.ImageField(blank=True, null=True, upload_to='images/', verbose_name='изображение')
 
     def __str__(self):
         return self.title

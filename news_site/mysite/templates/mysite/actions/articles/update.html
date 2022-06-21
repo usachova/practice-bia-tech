@@ -2,7 +2,7 @@
 {% block title %} Редактирование статьи {% endblock %}
 {% block body %}
     <h1>Редактировать статью</h1>
-    <form method="post">
+    <form method="post" enctype='multipart/form-data'>
         {% csrf_token %}
         {% load auth_extras %}
         {% if request.user.is_authenticated %}

@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import UpdateView, DeleteView, CreateView, DetailView, ListView
 from .models import Topic, Article
-from .forms import TopicForm, AuthUserForm, RedistrUserForm
+from .forms import AuthUserForm, RedistrUserForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from .templatetags.auth_extras import has_group

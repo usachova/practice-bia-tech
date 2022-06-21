@@ -4,6 +4,9 @@
     <h1>{{ article.title }}</h1>
     <p>Тема: {{ article.topic }}</p>
     <p>{{ article.text|safe|linebreaks }}</p>
+    {% if article.image %}
+        <img src="{{ article.image.url }}" height="400">
+    {% endif %}
     <p><i>Автор: {{ article.author }}</i></p>
     {% load auth_extras %}
     {% if request.user.is_authenticated %}

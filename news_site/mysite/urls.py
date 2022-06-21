@@ -1,6 +1,7 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path
 from .views import *
-from django.contrib import admin
 
 urlpatterns = [
     path('', MainView.as_view(), name='index'),
@@ -18,4 +19,4 @@ urlpatterns = [
     path('article/<int:pk>/update', ArticleUpdateView.as_view(), name='update_article'),
     path('article/<int:pk>/delete', ArticleDeleteView.as_view(), name='delete_article'),
     path('article/<int:pk>', ArticleView.as_view(), name='article'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
