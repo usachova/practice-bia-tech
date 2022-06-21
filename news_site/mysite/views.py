@@ -15,7 +15,11 @@ from .templatetags.auth_extras import has_group
 
 class MainView(View):
     def get(self, request, *args, **kwargs):
-        object_list = Article.objects.order_by('topic')
+        search_query = request.GET.get('search', '')
+        if search_query:
+            object_list = Article.objects.filter(title__icontains=search_query)
+        else:
+            object_list = Article.objects.order_by('topic')
         paginator = Paginator(object_list, 5)
         page = request.GET.get('page')
         try:
@@ -24,6 +28,7 @@ class MainView(View):
             article_list = paginator.page(1)
         except EmptyPage:
             article_list = paginator.page(paginator.num_pages)
+
         return render(request, 'mysite/index.html', {'page': page, 'article_list': article_list})
 
 class ArticleListView(ListView):

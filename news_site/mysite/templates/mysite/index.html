@@ -17,6 +17,12 @@
         {% endif %}
     {% endif %}
 
+<br><br>
+<form action="{% url 'index' %}">
+    <input type="search" placeholder="поиск.." name="search">
+    <button type="submit">искать</button>
+</form>
+
 {% regroup article_list by topic as topics_list %}
 <ul>
 {% for topic in topics_list %}
