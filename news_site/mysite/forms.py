@@ -1,6 +1,8 @@
 from django.contrib.auth.forms import AuthenticationForm
 from django.forms import ModelForm
 from django.contrib.auth.models import User
+from .models import Comment
+
 
 class AuthUserForm(AuthenticationForm, ModelForm):
     class Meta:
@@ -18,3 +20,8 @@ class RedistrUserForm(ModelForm):
         if commit:
             user.save()
         return user
+
+class CommentForm(ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['author', 'text']

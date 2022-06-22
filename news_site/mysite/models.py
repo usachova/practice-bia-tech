@@ -13,8 +13,8 @@ class Topic(models.Model):
 class Article(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='автор')
     topic = models.ForeignKey(Topic, on_delete=models.SET_NULL, verbose_name='тема', blank=True, null=True)
-    title = models.CharField(max_length=100)
-    text = models.TextField()
+    title = models.CharField(max_length=100, verbose_name='заголовок')
+    text = models.TextField(verbose_name='текст статьи')
     image = models.ImageField(blank=True, null=True, upload_to='images/', verbose_name='изображение')
 
     def __str__(self):
@@ -22,3 +22,8 @@ class Article(models.Model):
 
     class Meta:
         ordering = ['topic']
+
+class Comment(models.Model):
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, verbose_name='статья')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='комментатор')
+    text = models.TextField()
