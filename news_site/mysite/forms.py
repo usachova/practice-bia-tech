@@ -24,4 +24,4 @@ class RedistrUserForm(ModelForm):
 class CommentForm(ModelForm):
     class Meta:
         model = Comment
-        fields = ['author', 'text']
+        fields = ['text']

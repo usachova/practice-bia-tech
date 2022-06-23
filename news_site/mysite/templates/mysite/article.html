@@ -15,4 +15,20 @@
              <a href="{% url 'delete_article' article.id %}"><button>удалить</button></a>
         {% endif %}
     {% endif %}
+
+    <h2>комментарии</h2>
+    <ul>
+        {% for comment in article.comments.all %}
+            <li><b>{{ comment.author }}</b>: {{ comment.text }}</li>
+        {% endfor %}
+    </ul>
+
+    <form method="post">
+        {% csrf_token %}
+        {% if request.user.is_authenticated %}
+            {{ form.text }}<br>
+            <button type="submit">прокомментировать</button>
+        {% endif %}
+    </form>
+
 {% endblock %}

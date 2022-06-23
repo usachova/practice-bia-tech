@@ -2,12 +2,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, LogoutView
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import UpdateView, DeleteView, CreateView, DetailView, ListView
+from django.views.generic.edit import FormMixin
 from .models import Topic, Article
-from .forms import AuthUserForm, RedistrUserForm
+from .forms import AuthUserForm, RedistrUserForm, CommentForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from .templatetags.auth_extras import has_group
@@ -100,11 +101,29 @@ class ArticleCreateView(CreateView):
         self.object.save()
         return super().form_valid(form)
 
-
-class ArticleView(DetailView):
+class ArticleView(FormMixin, DetailView):
     model = Article
     template_name = 'mysite/article.html'
     context_object_name = 'article'
+    form_class = CommentForm
+
+    def get_success_url(self):
+        article_id = self.object.article.id
+        return reverse_lazy('article', kwargs={'pk': article_id})
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.article = self.get_object()
+        self.object.author = self.request.user
+        self.object.save()
+        return super().form_valid(form)
 
 class ArticleUpdateView(LoginRequiredMixin, UpdateView):
     model = Article

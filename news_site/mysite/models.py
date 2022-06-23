@@ -24,6 +24,6 @@ class Article(models.Model):
         ordering = ['topic']
 
 class Comment(models.Model):
-    article = models.ForeignKey(Article, on_delete=models.CASCADE, verbose_name='статья')
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, verbose_name='статья', related_name='comments')
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='комментатор')
     text = models.TextField()
