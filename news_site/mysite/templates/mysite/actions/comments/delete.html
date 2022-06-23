@@ -1,0 +1,14 @@
+{% extends 'mysite/base.html' %}
+{% block title %} Удаление комментария {% endblock %}
+{% block body %}
+    <h1>Удалить комментарий</h1>
+    <form method="post">
+        {% csrf_token %}
+        {% load auth_extras %}
+        {% if request.user.is_authenticated %}
+            {% if request.user|has_group:"admins" or request.user|is_author:comment %}
+                <button type="submit">удалить</button>
+            {% endif %}
+        {% endif %}
+    </form>
+{% endblock %}

@@ -13,7 +13,7 @@
             <a href="{% url 'edit_topics' %}"><button>Редактировать темы</button></a>
         {% endif %}
         {% if request.user|has_group:"admins" or request.user|has_group:"editors" %}
-            <a href="{% url 'edit_articles' %}"><button>Редактировать статьи</button></a>
+            <a href="{% url 'create_article' %}"><button>Добавить статью</button></a>
         {% endif %}
     {% endif %}
 

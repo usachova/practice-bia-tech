@@ -10,16 +10,26 @@
     <p><i>Автор: {{ article.author }}</i></p>
     {% load auth_extras %}
     {% if request.user.is_authenticated %}
-        {% if request.user|has_group:"admins" or request.user|has_group:"editors" %}
+        {% if request.user|has_group:"admins" or request.user|is_author:article %}
             <a href="{% url 'update_article' article.id %}"><button>редактировать</button></a>
-             <a href="{% url 'delete_article' article.id %}"><button>удалить</button></a>
+            <a href="{% url 'delete_article' article.id %}"><button>удалить</button></a>
         {% endif %}
     {% endif %}
 
     <h2>комментарии</h2>
     <ul>
         {% for comment in article.comments.all %}
-            <li><b>{{ comment.author }}</b>: {{ comment.text }}</li>
+            <li>
+                <b>{{ comment.author }}</b>: {{ comment.text }}
+                {% if request.user.is_authenticated %}
+                    {% if request.user|is_author:comment %}
+                        <a href="{% url 'update_comment' comment.id %}"><button>редактировать</button></a>
+                    {% endif %}
+                    {% if request.user|has_group:"admins" or request.user|is_author:comment %}
+                        <a href="{% url 'delete_comment' comment.id %}"><button>удалить</button></a>
+                    {% endif %}
+                {% endif %}
+            </li>
         {% endfor %}
     </ul>
 

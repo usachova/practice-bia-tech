@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import UpdateView, DeleteView, CreateView, DetailView, ListView
 from django.views.generic.edit import FormMixin
-from .models import Topic, Article
+from .models import Topic, Article, Comment
 from .forms import AuthUserForm, RedistrUserForm, CommentForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -91,7 +91,7 @@ class ArticlesEditView(View):
 
 class ArticleCreateView(CreateView):
     model = Article
-    success_url = '/articles/edit'
+    success_url = '/'
     template_name = 'mysite/actions/articles/create.html'
     fields = ['topic', 'title', 'text', 'image']
 
@@ -167,3 +167,20 @@ class RedistrUserView(CreateView):
 
 class LogoutUserView(LogoutView):
     next_page = '/'
+
+class CommentUpdateView(UpdateView):
+    model = Comment
+    template_name = 'mysite/actions/comments/update.html'
+    fields = ['text']
+
+    def get_success_url(self):
+        article_id = self.object.article.id
+        return reverse_lazy('article', kwargs={'pk': article_id})
+
+class CommentDeleteView(DeleteView):
+    model = Comment
+    template_name = 'mysite/actions/comments/delete.html'
+
+    def get_success_url(self):
+        article_id = self.object.article.id
+        return reverse_lazy('article', kwargs={'pk': article_id})

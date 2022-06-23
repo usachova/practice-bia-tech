@@ -1,0 +1,13 @@
+{% extends 'mysite/base.html' %}
+{% block title %} Редактирование комментария {% endblock %}
+{% block body %}
+    <h1>Редактировать комментарий</h1>
+    <form method="post" enctype='multipart/form-data'>
+        {% csrf_token %}
+        {% load auth_extras %}
+        {% if request.user.is_authenticated and request.user|is_author:comment %}
+            {{ form.text }}<br>
+            <button type="submit">отредактировать</button>
+        {% endif %}
+    </form>
+{% endblock %}
