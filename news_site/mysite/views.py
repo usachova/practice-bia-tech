@@ -127,9 +127,12 @@ class ArticleView(FormMixin, DetailView):
 
 class ArticleUpdateView(LoginRequiredMixin, UpdateView):
     model = Article
-    success_url = '/articles/edit'
     template_name = 'mysite/actions/articles/update.html'
     fields = ['topic', 'title', 'text', 'image']
+
+    def get_success_url(self):
+        article_id = self.object.id
+        return reverse_lazy('article', kwargs={'pk': article_id})
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -139,7 +142,7 @@ class ArticleUpdateView(LoginRequiredMixin, UpdateView):
 
 class ArticleDeleteView(LoginRequiredMixin, DeleteView):
     model = Article
-    success_url = '/articles/edit'
+    success_url = '/'
     template_name = 'mysite/actions/articles/delete.html'
     fields = ['topic', 'title', 'text', 'image']
 
