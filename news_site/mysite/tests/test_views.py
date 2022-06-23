@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.test.client import Client
 from django.contrib.auth.models import User, Group
 
-from mysite.models import Topic
+from mysite.models import Topic, Article, Comment
 
 
 class TopicViewTest(TestCase):
@@ -37,39 +37,41 @@ class TopicViewTest(TestCase):
     def test_topic_delete_view(self):
         pass
 
+class ArticleViewTest(TestCase):
+    def setUp(self):
+        pass
 
-################################
+    def test_article_list_view(self):
+        # main view
+        pass
 
-# class MainViewTest(TestCase):
-#     pass
-#
-# class ArticlesCreateViewTest(TestCase):
-#     pass
-#
-# class ArticleViewTest(TestCase):
-#     pass
-#
-# class ArticlesUpdateViewTest(TestCase):
-#     pass
-#
-# class ArticlesDeleteViewTest(TestCase):
-#     pass
-#
-#
-#
-# class LoginUserViewTest(TestCase):
-#     pass
-#
-# class RedistrUserViewTest(TestCase):
-#     pass
-#
-# class LogoutUserViewTest(TestCase):
-#     pass
-#
-#
-#
-# class CommentUpdateView(TestCase):
-#     pass
-#
-# class CommentDeleteView(TestCase):
-#     pass
+    def test_article_view(self):
+        pass
+
+    def test_article_create_view(self):
+        pass
+
+    def test_article_update_view(self):
+        pass
+
+    def test_article_delete_view(self):
+        pass
+
+
+class CommentViewTest(TestCase):
+    def setUp(self):
+        pass
+
+    def test_comment_list_view(self):
+        # article view
+        pass
+
+    def test_comment_create_view(self):
+        # article view
+        pass
+
+    def test_comment_update_view(self):
+        pass
+
+    def test_comment_delete_view(self):
+        pass
