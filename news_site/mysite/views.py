@@ -146,14 +146,6 @@ class ArticleDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'mysite/actions/articles/delete.html'
     fields = ['topic', 'title', 'text', 'image']
 
-    def delete(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        if self.request.user != self.object.author and not has_group(self.request.user, "admins"):
-            return self.handle_no_permission()
-        success_url = self.get_success_url()
-        self.object.delete()
-        return HttpResponseRedirect(success_url)
-
 class LoginUserView(LoginView):
     template_name = 'mysite/auth/login.html'
     form_class = AuthUserForm
