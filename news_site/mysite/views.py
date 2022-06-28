@@ -68,19 +68,19 @@ class TopicsEditView(View):
 
 class TopicCreateView(CreateView):
     model = Topic
-    success_url = '/topics/edit'
+    success_url = '/topics'
     template_name = 'mysite/actions/topics/create.html'
     fields = ['topic']
 
 class TopicUpdateView(UpdateView):
     model = Topic
-    success_url = '/topics/edit'
+    success_url = '/topics'
     template_name = 'mysite/actions/topics/update.html'
     fields = ['topic']
 
 class TopicDeleteView(DeleteView):
     model = Topic
-    success_url = '/topics/edit'
+    success_url = '/topics'
     template_name = 'mysite/actions/topics/delete.html'
     fields = ['topic']
 
